@@ -1,0 +1,63 @@
+server:
+  port: 10020
+  tomcat:
+    max-threads: 1000
+    max-connections: 2000
+    accept-count: 900
+    min-spare-threads: 50
+  connection-timeout: 5s
+spring:
+  datasource:
+    druid:
+      initial-size: 20
+      min-idle: 20
+      max-active: 100
+      max-wait: 1900
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      stat-view-servlet:
+        enabled: false
+      web-stat-filter:
+        enabled: false
+      filter:
+        config:
+          enabled: false
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:4306/test
+          username: username
+          password: password
+          driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置\
+          type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: password
+    database: 1
+    jedis:
+      pool:
+        max-active: 25
+        max-wait: -1ms
+        max-idle: 50
+        min-idle: 0
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  config: classpath:logback-spring.xml
+## ElasticSearch 配置
+elasticsearch:
+  schema: http
+  address: 127.0.0.1
+  connectTimeout: 10000
+  socketTimeout: 15000
+  connectionRequestTimeout: 20000
+  maxConnectNum: 100
+  maxConnectPerRoute: 100
+  username: usname
+  passwd: passwd
